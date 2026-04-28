@@ -1,0 +1,9 @@
+*.pth
+*.gz
+*.0
+*.ckpt
+*.png
+*.jpg
+__pycache__
+data
+output_cache
