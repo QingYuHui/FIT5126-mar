@@ -8,6 +8,13 @@ if str(REPO_ROOT) not in sys.path:
     sys.path.insert(0, str(REPO_ROOT))
 os.chdir(REPO_ROOT)
 
+OUTPUT_DIR = REPO_ROOT / "Evaluate" / "outputs"
+OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
+
+
+def out_path(filename: str) -> str:
+    return str(OUTPUT_DIR / filename)
+
 # 检查生成的 cache 文件，批量生成三视图对比图
 
 """
@@ -133,8 +140,8 @@ def main():
 
     plt.suptitle("Multi-Patient 3-View Reconstruction", color='white', fontsize=20, y=0.99)
     plt.tight_layout()
-    plt.savefig("05_batch_3view_comparison_2.png", facecolor='black', bbox_inches='tight')
-    print("✅ 批量三视图对比已保存为 05_batch_3view_comparison_2.png")
+    plt.savefig(out_path("16_cached_latents_multi_patient_3view.png"), facecolor='black', bbox_inches='tight')
+    print("✅ 批量三视图对比已保存为 16_cached_latents_multi_patient_3view.png")
 
 if __name__ == "__main__":
     main()

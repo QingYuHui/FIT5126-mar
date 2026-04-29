@@ -1,3 +1,18 @@
+"""
+Purpose:
+    Legacy latent-space inpainting evaluation script. It masks part of a
+    cached latent volume, lets MAR reconstruct the missing tokens, decodes the
+    result, and saves qualitative/metric outputs.
+
+Suggested filename:
+    20_legacy_latent_inpainting_half_mask_eval.py
+
+Notes:
+    This file is kept for reference. For paper figures, prefer
+    21_eval_random_latent_inpainting_for_figures.py, which has cleaner scaling,
+    sampling, and visualisation defaults.
+"""
+
 # Allow this copied script to be run from either the repository root or Evaluate/.
 from pathlib import Path
 import sys
@@ -8,25 +23,13 @@ if str(REPO_ROOT) not in sys.path:
     sys.path.insert(0, str(REPO_ROOT))
 os.chdir(REPO_ROOT)
 
-# 给模型半个脑子，让它画出另外半个
+OUTPUT_DIR = REPO_ROOT / "Evaluate" / "outputs"
+OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
 
-"""
-Purpose:
-    Legacy latent-space inpainting evaluation script. It masks part of a
-    cached latent volume, lets MAR reconstruct the missing tokens, decodes the
-    result, and saves qualitative/metric outputs.
 
-Suggested filename:
-    08_legacy_latent_inpainting_half_mask_eval.py
+def out_path(filename: str) -> str:
+    return str(OUTPUT_DIR / filename)
 
-Notes:
-    This file is kept for reference. For paper figures, prefer
-    08_eval_inpainting_random.py, which has cleaner scaling, sampling, and
-    visualisation defaults.
-"""
-
-import sys
-import os
 import torch
 import numpy as np
 import nibabel as nib
@@ -350,15 +353,15 @@ def main():
         img_pred = decode_with_quant(inpainted_z)
 
     # 6. 保存
-    save_viewable_nifti(img_gt, "08_eval_01_GroundTruth.nii.gz")
-    save_viewable_nifti(img_masked, "08_eval_02_MaskedInput.nii.gz") # 现在这张图绝对诚实了
-    save_viewable_nifti(img_pred, "08_eval_03_Inpainted.nii.gz")
+    save_viewable_nifti(img_gt, out_path("20_legacy_inpaint_01_ground_truth.nii.gz"))
+    save_viewable_nifti(img_masked, out_path("20_legacy_inpaint_02_masked_input.nii.gz")) # 现在这张图绝对诚实了
+    save_viewable_nifti(img_pred, out_path("20_legacy_inpaint_03_inpainted.nii.gz"))
     
     mse = np.mean((img_gt - img_pred) ** 2)
     print(f"📉 补全误差 (MSE): {mse:.6f}")
 
     print("📊 正在生成概览图...")
-    summary_file = "08_eval_summary_plot.png"
+    summary_file = out_path("20_legacy_inpaint_summary.png")
     save_summary_plot(img_gt, img_masked, img_pred, summary_file)
     
     # 1. 计算 PSNR
@@ -374,7 +377,7 @@ def main():
     print(f"   PSNR (越高越好): {val_psnr:.2f} dB")
     print(f"   SSIM (越高越好): {val_ssim:.4f}")
 
-    print("✅ 完成！请查看 08_eval_summary_plot.png 和 NIfTI 文件。")
+    print("✅ 完成！请查看 20_legacy_inpaint_summary.png 和 NIfTI 文件。")
 
 if __name__ == "__main__":
     main()

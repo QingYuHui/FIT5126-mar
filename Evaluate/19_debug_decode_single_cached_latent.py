@@ -18,6 +18,13 @@ if str(REPO_ROOT) not in sys.path:
     sys.path.insert(0, str(REPO_ROOT))
 os.chdir(REPO_ROOT)
 
+OUTPUT_DIR = REPO_ROOT / "Evaluate" / "outputs"
+OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
+
+
+def out_path(filename: str) -> str:
+    return str(OUTPUT_DIR / filename)
+
 
 
 import sys
@@ -113,8 +120,8 @@ def main():
     plt.imshow(img[img.shape[0]//2, :, :], cmap='gray')
     plt.colorbar()
     plt.title("Decoded Image (GT)")
-    plt.savefig("debug_check_gt.png")
-    print("✅ 诊断图已保存为 debug_check_gt.png，请打开查看！")
+    plt.savefig(out_path("19_debug_cached_latent_decode.png"))
+    print("✅ 诊断图已保存为 19_debug_cached_latent_decode.png，请打开查看！")
 
     # -------------------------------------------
     # 步骤 4: 保存 NIfTI (修正显示范围)
@@ -126,8 +133,8 @@ def main():
     img_uint8 = img_norm.astype(np.uint8)
 
     affine = np.eye(4)
-    nib.save(nib.Nifti1Image(img_uint8, affine), "debug_gt_uint8.nii.gz")
-    print("✅ 已保存 debug_gt_uint8.nii.gz (已转为0-255范围，请用软件打开此文件)")
+    nib.save(nib.Nifti1Image(img_uint8, affine), out_path("19_debug_cached_latent_decode_uint8.nii.gz"))
+    print("✅ 已保存 19_debug_cached_latent_decode_uint8.nii.gz (已转为0-255范围，请用软件打开此文件)")
 
 if __name__ == "__main__":
     main()

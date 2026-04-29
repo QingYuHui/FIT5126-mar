@@ -8,6 +8,13 @@ if str(REPO_ROOT) not in sys.path:
     sys.path.insert(0, str(REPO_ROOT))
 os.chdir(REPO_ROOT)
 
+OUTPUT_DIR = REPO_ROOT / "Evaluate" / "outputs"
+OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
+
+
+def out_path(filename: str) -> str:
+    return str(OUTPUT_DIR / filename)
+
 # 检查 VQGAN Stage 1 Checkpoint 的结构
 # 以推断模型配置参数 (n_embed, embed_dim, z_channels, ch, ch_mult 等等)
 

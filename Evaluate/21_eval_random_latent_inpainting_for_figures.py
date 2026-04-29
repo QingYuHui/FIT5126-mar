@@ -6,7 +6,7 @@ Purpose:
     the VQGAN/VAE, and saves NIfTI outputs plus a three-view summary plot.
 
 Suggested filename:
-    08_eval_random_latent_inpainting_for_figures.py
+    21_eval_random_latent_inpainting_for_figures.py
 """
 
 # Allow this copied script to be run from either the repository root or Evaluate/.
@@ -18,6 +18,13 @@ REPO_ROOT = Path(__file__).resolve().parents[1]
 if str(REPO_ROOT) not in sys.path:
     sys.path.insert(0, str(REPO_ROOT))
 os.chdir(REPO_ROOT)
+
+OUTPUT_DIR = REPO_ROOT / "Evaluate" / "outputs"
+OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
+
+
+def out_path(filename: str) -> str:
+    return str(OUTPUT_DIR / filename)
 
 
 
@@ -288,9 +295,9 @@ def main() -> None:
         img_masked = decode_latent(vae_model, masked_input_z)
         img_pred = decode_latent(vae_model, inpainted_z)
 
-    save_viewable_nifti(img_gt, "08_eval_01_GroundTruth.nii.gz")
-    save_viewable_nifti(img_masked, "08_eval_02_MaskedInput.nii.gz")
-    save_viewable_nifti(img_pred, "08_eval_03_Inpainted.nii.gz")
+    save_viewable_nifti(img_gt, out_path("21_random_inpaint_01_ground_truth.nii.gz"))
+    save_viewable_nifti(img_masked, out_path("21_random_inpaint_02_masked_input.nii.gz"))
+    save_viewable_nifti(img_pred, out_path("21_random_inpaint_03_inpainted.nii.gz"))
 
     gt_u8 = to_visual_uint8(img_gt)
     pred_u8 = to_visual_uint8(img_pred)
@@ -298,7 +305,7 @@ def main() -> None:
     val_psnr = psnr(gt_u8, pred_u8, data_range=255)
     val_ssim = ssim(gt_u8, pred_u8, data_range=255, win_size=3, channel_axis=None)
 
-    save_summary_plot(img_gt, img_masked, img_pred, "08_eval_summary_plot.png")
+    save_summary_plot(img_gt, img_masked, img_pred, out_path("21_random_inpaint_summary.png"))
     print("Latent inpainting metrics:")
     print(f"  MSE : {mse:.2f}")
     print(f"  PSNR: {val_psnr:.2f} dB")

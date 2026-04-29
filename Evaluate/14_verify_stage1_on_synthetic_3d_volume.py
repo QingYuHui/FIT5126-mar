@@ -8,6 +8,13 @@ if str(REPO_ROOT) not in sys.path:
     sys.path.insert(0, str(REPO_ROOT))
 os.chdir(REPO_ROOT)
 
+OUTPUT_DIR = REPO_ROOT / "Evaluate" / "outputs"
+OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
+
+
+def out_path(filename: str) -> str:
+    return str(OUTPUT_DIR / filename)
+
 # 用一个 3D 图形来验证 VAE 的编码和解码效果
 # 验证 stage1.ckpt 是否能正确工作
 # 
@@ -205,8 +212,8 @@ def main():
     #     recon = model.decode(destroyed_latent)
     #     # 保存坏掉的图
     #     mid_slice_bad = recon[0, 0, DEPTH//2].cpu().numpy()
-    #     plt.imsave("verify_sabotage.png", mid_slice_bad, cmap="gray")
-    #     print("😈 破坏测试图已保存为 verify_sabotage.png，请查看它是否只有一半！")
+    #     plt.imsave(out_path("14_verify_stage1_synthetic_sabotage.png"), mid_slice_bad, cmap="gray")
+    #     print("😈 破坏测试图已保存为 14_verify_stage1_synthetic_sabotage.png，请查看它是否只有一半！")
 
 
     # --- 可视化 ---
@@ -228,7 +235,7 @@ def main():
     plt.subplot(1, 3, 3); plt.title("Difference (Error)"); plt.imshow(diff, cmap="inferno") # inferno 颜色对比强烈
     plt.colorbar()
     
-    plt.savefig("02_verify_diff.png")
+    plt.savefig(out_path("14_verify_stage1_synthetic_diff.png"))
 
 if __name__ == "__main__":
     main()

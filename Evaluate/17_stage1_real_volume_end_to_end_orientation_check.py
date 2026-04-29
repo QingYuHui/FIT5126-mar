@@ -8,6 +8,13 @@ if str(REPO_ROOT) not in sys.path:
     sys.path.insert(0, str(REPO_ROOT))
 os.chdir(REPO_ROOT)
 
+OUTPUT_DIR = REPO_ROOT / "Evaluate" / "outputs"
+OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
+
+
+def out_path(filename: str) -> str:
+    return str(OUTPUT_DIR / filename)
+
 # 从 NIfTI 文件中读取医学图像，进行 VAE 编码再解码，并可视化结果以检查方向和对齐问题。
 
 """
@@ -141,8 +148,8 @@ def check_orientation():
     axs[1, 2].imshow(recon_np[:, :, idx_w], cmap='gray'); axs[1, 2].set_title("Recon (Sagittal)")
 
     plt.tight_layout()
-    plt.savefig("06_check_orientation.png")
-    print("✅ 已保存 06_check_orientation.png")
+    plt.savefig(out_path("17_stage1_real_volume_orientation_check.png"))
+    print("✅ 已保存 17_stage1_real_volume_orientation_check.png")
     
     # 简单的数值诊断
     mse = np.mean((x_np - recon_np)**2)

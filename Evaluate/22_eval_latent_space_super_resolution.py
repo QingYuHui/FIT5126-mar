@@ -6,7 +6,7 @@ Purpose:
     and saves qualitative outputs for the thesis results section.
 
 Suggested filename:
-    08_eval_latent_space_super_resolution.py
+    22_eval_latent_space_super_resolution.py
 
 Notes:
     This is an SR-style latent reconstruction test, not a fully conditional
@@ -22,6 +22,13 @@ REPO_ROOT = Path(__file__).resolve().parents[1]
 if str(REPO_ROOT) not in sys.path:
     sys.path.insert(0, str(REPO_ROOT))
 os.chdir(REPO_ROOT)
+
+OUTPUT_DIR = REPO_ROOT / "Evaluate" / "outputs"
+OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
+
+
+def out_path(filename: str) -> str:
+    return str(OUTPUT_DIR / filename)
 
 
 
@@ -322,9 +329,9 @@ def main() -> None:
         img_degraded = decode_latent(vae_model, degraded_input_z)
         img_pred = decode_latent(vae_model, reconstructed_z)
 
-    save_viewable_nifti(img_gt, "08_eval_SR_01_HR_GroundTruth.nii.gz")
-    save_viewable_nifti(img_degraded, "08_eval_SR_02_LR_Input.nii.gz")
-    save_viewable_nifti(img_pred, "08_eval_SR_03_Reconstructed.nii.gz")
+    save_viewable_nifti(img_gt, out_path("22_sr_01_hr_ground_truth.nii.gz"))
+    save_viewable_nifti(img_degraded, out_path("22_sr_02_degraded_latent_input.nii.gz"))
+    save_viewable_nifti(img_pred, out_path("22_sr_03_mar_reconstruction.nii.gz"))
 
     gt_u8 = to_visual_uint8(img_gt)
     pred_u8 = to_visual_uint8(img_pred)
@@ -332,7 +339,7 @@ def main() -> None:
     val_psnr = psnr(gt_u8, pred_u8, data_range=255)
     val_ssim = ssim(gt_u8, pred_u8, data_range=255, win_size=3, channel_axis=None)
 
-    save_summary_plot(img_gt, img_degraded, img_pred, "08_eval_SR_summary_plot.png")
+    save_summary_plot(img_gt, img_degraded, img_pred, out_path("22_sr_summary_plot.png"))
 
     print("\nLatent-space SR-style reconstruction metrics:")
     print(f"  Mask mode: {SR_MASK_MODE}")

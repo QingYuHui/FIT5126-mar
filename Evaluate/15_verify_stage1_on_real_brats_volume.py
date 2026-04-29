@@ -8,6 +8,13 @@ if str(REPO_ROOT) not in sys.path:
     sys.path.insert(0, str(REPO_ROOT))
 os.chdir(REPO_ROOT)
 
+OUTPUT_DIR = REPO_ROOT / "Evaluate" / "outputs"
+OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
+
+
+def out_path(filename: str) -> str:
+    return str(OUTPUT_DIR / filename)
+
 # 验证 VQGAN Stage 1 在真实 BraTS 医学影像数据上的重建效果
 
 """
@@ -189,7 +196,7 @@ def main():
     plt.imshow(rec_slice, cmap="gray") # 不设 vmin/vmax 以自适应对比度
     plt.axis('off')
     
-    output_filename = "03_verify_brats_result.png"
+    output_filename = out_path("15_verify_stage1_real_brats_result.png")
     plt.savefig(output_filename)
     print(f"🎉 验证完成！请查看 {output_filename}")
     print("如果右图能看到大致的大脑轮廓，说明模型在真实数据上工作正常！")

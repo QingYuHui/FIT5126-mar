@@ -8,6 +8,13 @@ if str(REPO_ROOT) not in sys.path:
     sys.path.insert(0, str(REPO_ROOT))
 os.chdir(REPO_ROOT)
 
+OUTPUT_DIR = REPO_ROOT / "Evaluate" / "outputs"
+OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
+
+
+def out_path(filename: str) -> str:
+    return str(OUTPUT_DIR / filename)
+
 # 让训练好的 AI 模型 “凭空想象” 画出一个 3D 大脑，而不需要参考任何现有的图片
 # graph LR
 #    A[随机初始噪声/全Mask] -->|MAR模型: sample_tokens| B(生成潜在向量 Latent z)
@@ -142,7 +149,7 @@ def main():
         img_3d = generated_images[0, 0, :, :, :].cpu().numpy()
 
     # ================= 5. 保存 NIfTI =================
-    save_filename = "07_check_gen_64_f4.nii.gz"
+    save_filename = out_path("18_unconditional_mar_sample_64_f4.nii.gz")
     
     # 简单的仿射矩阵 (Identity)
     affine = np.eye(4)
