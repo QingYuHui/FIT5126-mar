@@ -1,0 +1,53 @@
+已完成。根目录下相关评估/诊断脚本已经复制到 [Evaluate](<D:\OneDrive\04_AI\20_FIT5126\final paper\FIT5126-mar\Evaluate>) 文件夹，并按顶部建议名重新命名。
+
+我按你的要求分成两组：
+
+- `10_` 到 `19_`：第一部分，环境/模型/缓存/诊断类
+- `20_` 到 `23_`：第二部分，论文结果评估与出图类
+
+**Evaluate 文件夹内容**
+
+```text
+10_inspect_cached_latent_shape.py
+11_inspect_stage1_checkpoint_config.py
+12_inspect_stage1_checkpoint_keys.py
+13_check_mar_training_progress.py
+14_verify_stage1_on_synthetic_3d_volume.py
+15_verify_stage1_on_real_brats_volume.py
+16_decode_cached_latents_multi_patient_preview.py
+17_stage1_real_volume_end_to_end_orientation_check.py
+18_sample_unconditional_mar_volume.py
+19_debug_decode_single_cached_latent.py
+20_legacy_latent_inpainting_half_mask_eval.py
+21_eval_random_latent_inpainting_for_figures.py
+22_eval_latent_space_super_resolution.py
+23_make_final_sr_comparison_figure.py
+```
+
+我还给 `Evaluate/` 里的副本加了一个小 bootstrap：无论你从仓库根目录运行，还是进入 `Evaluate` 文件夹运行，它都会自动把仓库根目录加入 `sys.path` 并切回根目录，所以 `models/`、`vqgan/`、`output_cache/` 这些路径会更稳定。
+
+已检查：`Evaluate` 下全部 `.py` 文件通过 `py_compile` 语法检查。
+
+**建议执行顺序**
+
+```powershell
+python Evaluate/11_inspect_stage1_checkpoint_config.py
+python Evaluate/12_inspect_stage1_checkpoint_keys.py
+python Evaluate/14_verify_stage1_on_synthetic_3d_volume.py
+python Evaluate/15_verify_stage1_on_real_brats_volume.py
+python Evaluate/17_stage1_real_volume_end_to_end_orientation_check.py
+
+python Evaluate/10_inspect_cached_latent_shape.py
+python Evaluate/16_decode_cached_latents_multi_patient_preview.py
+python Evaluate/19_debug_decode_single_cached_latent.py
+
+python Evaluate/13_check_mar_training_progress.py
+python Evaluate/18_sample_unconditional_mar_volume.py
+
+python Evaluate/22_eval_latent_space_super_resolution.py
+python Evaluate/23_make_final_sr_comparison_figure.py
+
+python Evaluate/21_eval_random_latent_inpainting_for_figures.py
+```
+
+`20_legacy_latent_inpainting_half_mask_eval.py` 建议只作参考，不作为论文主图优先脚本。
