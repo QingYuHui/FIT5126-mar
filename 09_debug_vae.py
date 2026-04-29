@@ -1,3 +1,13 @@
+"""
+Purpose:
+    Debug one cached latent .npz file by visualising its latent slice,
+    decoding it through the VQGAN/VAE, and saving both a PNG diagnostic and a
+    viewable uint8 NIfTI volume.
+
+Suggested filename:
+    09_debug_decode_single_cached_latent.py
+"""
+
 import sys
 import os
 import torch

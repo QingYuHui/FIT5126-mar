@@ -1,5 +1,18 @@
 # 从 NIfTI 文件中读取医学图像，进行 VAE 编码再解码，并可视化结果以检查方向和对齐问题。
 
+"""
+Purpose:
+    Perform an end-to-end stage-1 check on a real NIfTI volume: load the MRI,
+    preprocess/pad it, encode and decode it through the VQGAN/VAE, and save
+    three-view input-vs-reconstruction figures.
+
+Suggested filename:
+    06_stage1_real_volume_end_to_end_orientation_check.py
+
+Notes:
+    This is a tokenizer/orientation diagnostic, not a MAR generation script.
+"""
+
 import torch
 import numpy as np
 import matplotlib.pyplot as plt

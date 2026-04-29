@@ -1,3 +1,13 @@
+"""
+Purpose:
+    Print the raw keys and tensor dimensions inside the stage-1 VQGAN/VAE
+    checkpoint. This is mainly a debugging script for checking whether the
+    checkpoint contains 3D convolution weights and decoder parameters.
+
+Suggested filename:
+    01_inspect_stage1_checkpoint_keys.py
+"""
+
 import torch
 import sys
 import os

@@ -4,6 +4,16 @@
 # 生成一个 边缘带有平滑渐变过渡的 3D 实心球体
 # Encode -> Decode
 
+"""
+Purpose:
+    Run a synthetic 3D soft-sphere volume through the stage-1 VQGAN/VAE
+    encoder and decoder. This verifies that the 3D model path can process
+    volumetric tensors and produces a visual reconstruction/error figure.
+
+Suggested filename:
+    02_verify_stage1_on_synthetic_3d_volume.py
+"""
+
 import torch
 import torch.nn as nn
 import numpy as np

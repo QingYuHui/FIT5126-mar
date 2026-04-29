@@ -4,6 +4,20 @@
 #    B -->|VAE模型: decode| C(解码出像素图像 Image)
 #    C -->|Nibabel| D[保存为 .nii.gz 文件]
 
+"""
+Purpose:
+    Generate a full 64^3 latent volume from the trained MAR model using
+    unconditional sampling, decode it with the VQGAN/VAE, and save the result
+    as a NIfTI file.
+
+Suggested filename:
+    07_sample_unconditional_mar_volume.py
+
+Notes:
+    This is a qualitative generation smoke test, not a super-resolution
+    benchmark.
+"""
+
 import os
 import torch
 import torch.nn.functional as F

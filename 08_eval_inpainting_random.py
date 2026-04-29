@@ -1,3 +1,14 @@
+"""
+Purpose:
+    Controlled latent-space random inpainting evaluation for paper figures.
+    The script masks a random subset of cached high-resolution latent tokens,
+    reconstructs them using the trained MAR prior, decodes all volumes with
+    the VQGAN/VAE, and saves NIfTI outputs plus a three-view summary plot.
+
+Suggested filename:
+    08_eval_random_latent_inpainting_for_figures.py
+"""
+
 import os
 import math
 import random
@@ -21,7 +32,7 @@ from models import mar, vae
 DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
 VAE_PATH = "vqgan/stage1.ckpt"
 CHECKPOINT_PATH = "output_run_64_patch1/checkpoint-last.pth"
-TARGET_NPZ = "output_cache/BraTS2021_00002_t1.npz"
+TARGET_NPZ = "output_cache/class0/BraTS2021_00002_t1.npz"
 
 MASK_RATIO = 0.30          # Easier and more interpretable than 50% for figures.
 NUM_ITER = 128             # More refinement steps usually reduces artifacts.

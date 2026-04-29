@@ -1,3 +1,18 @@
+"""
+Purpose:
+    Controlled latent-space super-resolution-style evaluation. The script
+    degrades a high-resolution cached latent volume by masking structured
+    latent anchors, reconstructs missing tokens with MAR, decodes the result,
+    and saves qualitative outputs for the thesis results section.
+
+Suggested filename:
+    08_eval_latent_space_super_resolution.py
+
+Notes:
+    This is an SR-style latent reconstruction test, not a fully conditional
+    LR-MRI to HR-MRI clinical super-resolution pipeline.
+"""
+
 import math
 import os
 import random
@@ -22,7 +37,7 @@ from models import mar, vae
 DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
 VAE_PATH = "vqgan/stage1.ckpt"
 CHECKPOINT_PATH = "output_run_64_patch1/checkpoint-last.pth"
-TARGET_NPZ = "output_cache/BraTS2021_00002_t1.npz"
+TARGET_NPZ = "output_cache/class0/BraTS2021_00002_t1.npz"
 
 SCALE_FACTOR = 2.6
 NUM_ITER = 128

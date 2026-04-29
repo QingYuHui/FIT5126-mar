@@ -1,3 +1,14 @@
+"""
+Purpose:
+    Build the final thesis comparison figure using outputs from
+    08_eval_super_resolution.py. It compares the VQGAN-decoded HR reference,
+    an interpolation baseline, and the MAR latent reconstruction using shared
+    0-255 intensity scaling and axial/coronal/sagittal views.
+
+Suggested filename:
+    08_make_final_sr_comparison_figure.py
+"""
+
 import os
 import sys
 

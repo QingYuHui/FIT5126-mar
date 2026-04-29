@@ -1,5 +1,18 @@
 # 检查生成的 cache 文件，批量生成三视图对比图
 
+"""
+Purpose:
+    Decode selected cached latent .npz files and create multi-patient
+    axial/coronal/sagittal views. This checks whether cached latents can be
+    decoded into plausible MRI volumes before MAR training/evaluation.
+
+Suggested filename:
+    05_decode_cached_latents_multi_patient_preview.py
+
+Notes:
+    Update FILES_TO_CHECK and BASE_CACHE_PATH for your local cache layout.
+"""
+
 import os
 import torch
 import torch.nn.functional as F

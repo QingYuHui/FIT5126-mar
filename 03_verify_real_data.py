@@ -1,5 +1,18 @@
 # 验证 VQGAN Stage 1 在真实 BraTS 医学影像数据上的重建效果
 
+"""
+Purpose:
+    Verify the stage-1 VQGAN/VAE reconstruction on a real BraTS NIfTI volume.
+    The script loads one MRI scan, preprocesses it, reconstructs it through
+    the tokenizer, and saves a side-by-side slice comparison.
+
+Suggested filename:
+    03_verify_stage1_on_real_brats_volume.py
+
+Notes:
+    Update NII_PATH if the BraTS data location differs.
+"""
+
 import torch
 import torch.nn as nn
 import torch.nn.functional as F

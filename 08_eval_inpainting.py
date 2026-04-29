@@ -1,5 +1,20 @@
 # 给模型半个脑子，让它画出另外半个
 
+"""
+Purpose:
+    Legacy latent-space inpainting evaluation script. It masks part of a
+    cached latent volume, lets MAR reconstruct the missing tokens, decodes the
+    result, and saves qualitative/metric outputs.
+
+Suggested filename:
+    08_legacy_latent_inpainting_half_mask_eval.py
+
+Notes:
+    This file is kept for reference. For paper figures, prefer
+    08_eval_inpainting_random.py, which has cleaner scaling, sampling, and
+    visualisation defaults.
+"""
+
 import sys
 import os
 import torch
@@ -19,7 +34,7 @@ vae_path = "vqgan/stage1.ckpt"
 # 确保这里指向你训练好的 Checkpoint
 checkpoint_path = "output_run_64_patch1/checkpoint-last.pth"
 # 选一个真实的缓存文件
-target_npz = "output_cache/BraTS2021_00002_t1.npz" 
+target_npz = "output_cache/class0/BraTS2021_00002_t1.npz" 
 
 # ================= 工具: 保存为可视化的 NIfTI =================
 def save_viewable_nifti(img_data, filename):

@@ -1,6 +1,16 @@
 # 检查 VQGAN Stage 1 Checkpoint 的结构
 # 以推断模型配置参数 (n_embed, embed_dim, z_channels, ch, ch_mult 等等)
 
+"""
+Purpose:
+    Inspect the VQGAN/VAE stage-1 checkpoint structure and infer key model
+    settings such as codebook size, embedding dimension, latent channels,
+    base channel count, and approximate downsampling depth.
+
+Suggested filename:
+    01_inspect_stage1_checkpoint_config.py
+"""
+
 import torch
 
 CKPT_PATH = "vqgan/stage1.ckpt"
